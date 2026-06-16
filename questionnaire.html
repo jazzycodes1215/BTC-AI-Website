@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Audit Intake Form — BTC Media</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0e12;
+      --card:      #1a1c24;
+      --border:    #2a2c38;
+      --teal:      #04b3b4;
+      --teal-dim:  #037e7f;
+      --white:     #fcfeff;
+      --muted:     #8e8f98;
+      --red:       #e05252;
+      --green:     #2ecc71;
+      --font:      'Segoe UI', Arial, sans-serif;
+      --radius:    10px;
+      --transition: 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ─────────────────────────────────────── */
+    .site-header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px 22px;
+      text-align: center;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .logo-btc {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--teal);
+      letter-spacing: -1px;
+      text-transform: uppercase;
+    }
+
+    .logo-media {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .form-intro {
+      margin-top: 16px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    /* ── PROGRESS BAR ───────────────────────────────── */
+    .progress-wrap {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .progress-step-label {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 700;
+    }
+
+    .progress-section-name {
+      font-size: 0.85rem;
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .progress-bar-track {
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal-dim), var(--teal));
+      border-radius: 99px;
+      transition: width var(--transition);
+    }
+
+    /* ── MAIN ───────────────────────────────────────── */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    /* ── STEP CARDS ─────────────────────────────────── */
+    .step {
+      display: none;
+      animation: stepIn var(--transition) both;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes stepOut {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-18px); }
+    }
+
+    .step.exiting {
+      display: block;
+      animation: stepOut var(--transition) both;
+      pointer-events: none;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 36px 36px;
+    }
+
+    .section-title {
+      font-size: 0.68rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .section-heading {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+      line-height: 1.55;
+    }
+
+    /* ── FORM FIELDS ────────────────────────────────── */
+    .field-group {
+      margin-bottom: 22px;
+    }
+
+    .field-row {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 22px;
+    }
+
+    .field-row .field-group {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    label .req {
+      color: var(--teal);
+      margin-left: 2px;
+    }
+
+    label .opt {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 0.7rem;
+      letter-spacing: 0;
+      text-transform: none;
+      margin-left: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 0.95rem;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="url"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(4, 179, 180, 0.15);
+    }
+
+    input.invalid,
+    select.invalid,
+    textarea.invalid {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(224, 82, 82, 0.12);
+    }
+
+    .field-error {
+      font-size: 0.75rem;
+      color: var(--red);
+      margin-top: 5px;
+      display: none;
+    }
+
+    .field-error.visible {
+      display: block;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238e8f98' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    select option {
+      background: var(--card);
+      color: var(--white);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+      line-height: 1.6;
+    }
+
+    textarea.large {
+      min-height: 140px;
+    }
+
+    /* ── RANGE SLIDER ───────────────────────────────── */
+    .range-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .range-wrap input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    .range-wrap input[type="range"]::-webkit-slider-runnable-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 99px;
+    }
+
+    .range-wrap input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--teal);
+      margin-top: -8px;
+      box-shadow: 0 0 0 3px rgba(4, 179, 180, 0.2);
+      transition: box-shadow 0.2s;
+    }
+
+    .range-wrap input[type="range"]:hover::-webkit-slider-thumb {
+      box-shadow: 0 0 0 6px rgba(4, 179, 180, 0.25);
+    }
+
+    .range-wrap input[type="range"]::-moz-range-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 99px;
+    }
+
+    .range-wrap input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--teal);
+      border: none;
+      box-shadow: 0 0 0 3px rgba(4, 179, 180, 0.2);
+    }
+
+    .range-value {
+      width: 36px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--teal);
+      flex-shrink: 0;
+    }
+
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 6px;
+      padding: 0 2px;
+    }
+
+    /* ── NAVIGATION BUTTONS ─────────────────────────── */
+    .nav-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 36px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 6px;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, transform 0.12s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-teal {
+      background: var(--teal);
+      color: #000;
+    }
+
+    .btn-teal:hover {
+      background: #05c8c9;
+      box-shadow: 0 4px 20px rgba(4, 179, 180, 0.35);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: var(--border);
+      color: var(--white);
+    }
+
+    .btn-submit {
+      background: var(--teal);
+      color: #000;
+      font-size: 1rem;
+      padding: 16px 32px;
+    }
+
+    .btn-submit:hover {
+      background: #05c8c9;
+      box-shadow: 0 6px 28px rgba(4, 179, 180, 0.4);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ── SUCCESS STATE ──────────────────────────────── */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 36px;
+    }
+
+    .success-screen.active {
+      display: block;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(46, 204, 113, 0.12);
+      border: 2px solid var(--green);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .success-icon svg {
+      width: 36px;
+      height: 36px;
+      fill: var(--green);
+    }
+
+    .success-heading {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .success-body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 440px;
+      margin: 0 auto 28px;
+    }
+
+    .success-motto {
+      font-size: 0.78rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 700;
+    }
+
+    /* ── DIVIDER ────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    /* ── HINT TEXT ──────────────────────────────────── */
+    .hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .footer-motto {
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .footer-contact {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .footer-contact a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-contact a:hover {
+      color: var(--teal);
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 600px) {
+      .card { padding: 28px 20px 24px; }
+      .field-row { grid-template-columns: 1fr; }
+      .section-heading { font-size: 1.25rem; }
+      .logo-btc, .logo-media { font-size: 1.9rem; }
+      .btn-submit { font-size: 0.88rem; padding: 14px 20px; }
+      .nav-row { flex-direction: column-reverse; }
+      .btn { width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 400px) {
+      .logo-btc, .logo-media { font-size: 1.55rem; }
+    }
+
+    /* ── STEP INDICATOR DOTS ────────────────────────── */
+    .step-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .step-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background var(--transition), width var(--transition);
+      cursor: pointer;
+    }
+
+    .step-dot.active {
+      background: var(--teal);
+      width: 20px;
+      border-radius: 3px;
+    }
+
+    .step-dot.done {
+      background: var(--teal-dim);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ───────────────────────────────────────── -->
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <span class="logo-btc">Better Total</span><span class="logo-media"> Marketing</span>
+    </a>
+    <p class="tagline">We Deliver Customers.</p>
+    <p class="form-intro">
+      Tell us about your business and how you currently get customers. We review every answer before we call —
+      so the conversation is built around your situation, not a generic pitch.
+    </p>
+  </header>
+
+  <!-- ── PROGRESS BAR ─────────────────────────────────── -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-meta">
+      <span class="progress-step-label" id="progressLabel">Step 1 of 7</span>
+      <span class="progress-section-name" id="progressName">Contact Details</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progressFill" style="width: 14.28%"></div>
+    </div>
+    <div class="step-dots" id="stepDots"></div>
+  </div>
+
+  <!-- ── MAIN ─────────────────────────────────────────── -->
+  <main>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- STEP 1 — Contact Details                        -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="step active" id="step1">
+      <div class="card">
+        <p class="section-title">Section 1</p>
+        <h2 class="section-heading">Contact Details</h2>
+        <p class="section-sub">Let's start with the basics. All required fields are marked with <span style="color:var(--teal)">*</span></p>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="fullName">Full Name <span class="req">*</span></label>
+            <input type="text" id="fullName" name="fullName" placeholder="Jane Smith" autocomplete="name" />
+            <p class="field-error" id="err-fullName">Please enter your full name.</p>
+          </div>
+          <div class="field-group">
+            <label for="email">Email Address <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="jane@yourbusiness.com" autocomplete="email" />
+            <p class="field-error" id="err-email">Please enter a valid email address.</p>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="phone">Phone Number <span class="req">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" autocomplete="tel" />
+            <p class="field-error" id="err-phone">Please enter a phone number.</p>
+          </div>
+          <div class="field-group">
+            <label for="businessName">Business Name <span class="req">*</span></label>
+            <input type="text" id="businessName" name="businessName" placeholder="Acme Corp" autocomplete="organization" />
+            <p class="field-error" id="err-businessName">Please enter your business name.</p>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="website">Website URL <span class="req">*</span></label>
+            <input type="url" id="website" name="website" placeholder="https://yourbusiness.com" autocomplete="url" />
+            <p class="field-error" id="err-website">Please enter a valid website URL.</p>
+          </div>
+          <div class="field-group">
+            <label for="industry">Industry / Business Type <span class="req">*</span></label>
+            <input type="text" id="industry" name="industry" placeholder="e.g. Real Estate, E-Commerce, Coaching" />
+            <p class="field-error" id="err-industry">Please enter your industry.</p>
+          </div>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-teal" onclick="nextStep()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- STEP 2 — Business Overview                      -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="step" id="step2">
+      <div class="card">
+        <p class="section-title">Section 2</p>
+        <h2 class="section-heading">Business Overview</h2>
+        <p class="section-sub">Help us understand the shape of your business before we dig into the details.</p>
+
+        <div class="field-group">
+          <label for="bizDescription">What do you do and who do you serve? <span class="req">*</span></label>
+          <textarea id="bizDescription" name="bizDescription" class="large" placeholder="Describe your business, what products or services you offer, and who your ideal customers are. Be as specific as possible."></textarea>
+          <p class="field-error" id="err-bizDescription">Please describe your business.</p>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="revenue">Annual Turnover / Revenue Range <span class="req">*</span></label>
+            <select id="revenue" name="revenue">
+              <option value="">— Select range —</option>
+              <option value="under-100k">Under $100K</option>
+              <option value="100k-250k">$100K – $250K</option>
+              <option value="250k-500k">$250K – $500K</option>
+              <option value="500k-1m">$500K – $1M</option>
+              <option value="1m-plus">$1M+</option>
+            </select>
+            <p class="field-error" id="err-revenue">Please select a revenue range.</p>
+          </div>
+          <div class="field-group">
+            <label for="yearsInBiz">How long have you been in business? <span class="req">*</span></label>
+            <select id="yearsInBiz" name="yearsInBiz">
+              <option value="">— Select range —</option>
+              <option value="under-1">Under 1 year</option>
+              <option value="1-3">1–3 years</option>
+              <option value="3-5">3–5 years</option>
+              <option value="5-10">5–10 years</option>
+              <option value="10-plus">10+ years</option>
+            </select>
+            <p class="field-error" id="err-yearsInBiz">Please select how long you've been in business.</p>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="employees">Number of Employees <span class="req">*</span></label>
+          <select id="employees" name="employees">
+            <option value="">— Select range —</option>
+            <option value="solo">Solo (just me)</option>
+            <option value="2-5">2–5</option>
+            <option value="6-20">6–20</option>
+            <option value="21-50">21–50</option>
+            <option value="50-plus">50+</option>
+          </select>
+          <p class="field-error" id="err-employees">Please select your team size.</p>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-teal" onclick="nextStep()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-ghost" onclick="prevStep()">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- STEP 3 — Customer Journey                       -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="step" id="step3">
+      <div class="card">
+        <p class="section-title">Section 3</p>
+        <h2 class="section-heading">Customer Journey</h2>
+        <p class="section-sub">Walk us through how a stranger becomes a paying client — this is where we find your biggest leverage points.</p>
+
+        <div class="field-group">
+          <label for="customerJourney">Walk us through your customer journey from first contact to closed sale <span class="req">*</span></label>
+          <textarea id="customerJourney" name="customerJourney" class="large" placeholder="e.g. Lead sees our Instagram ad → fills out a form → gets a call from us → we send a proposal → follow up twice → close or lose. Include who handles each step and what tools are involved."></textarea>
+          <p class="field-error" id="err-customerJourney">Please describe your customer journey.</p>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="timeToClose">Average time from first contact to close <span class="req">*</span></label>
+            <input type="text" id="timeToClose" name="timeToClose" placeholder='e.g. "3 days", "2 weeks", "3 months"' />
+            <p class="field-error" id="err-timeToClose">Please enter your average close time.</p>
+          </div>
+          <div class="field-group">
+            <label for="avgOrderValue">Average Order / Project Value ($) <span class="req">*</span></label>
+            <input type="number" id="avgOrderValue" name="avgOrderValue" placeholder="e.g. 2500" min="0" />
+            <p class="field-error" id="err-avgOrderValue">Please enter your average order value.</p>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="cac">Customer Acquisition Cost (CAC) <span class="opt">(optional, $ if known)</span></label>
+            <input type="number" id="cac" name="cac" placeholder="e.g. 150" min="0" />
+          </div>
+          <div class="field-group">
+            <label for="ltv">Customer Lifetime Value (LTV) <span class="opt">(optional, $ if known)</span></label>
+            <input type="number" id="ltv" name="ltv" placeholder="e.g. 4000" min="0" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="conversionRate">Current Lead Conversion Rate <span class="opt">(optional, %)</span></label>
+          <input type="number" id="conversionRate" name="conversionRate" placeholder="e.g. 22" min="0" max="100" />
+          <p class="hint">What percentage of leads become paying clients?</p>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-teal" onclick="nextStep()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-ghost" onclick="prevStep()">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- STEP 4 — Goals & Pain                           -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="step" id="step4">
+      <div class="card">
+        <p class="section-title">Section 4</p>
+        <h2 class="section-heading">Goals &amp; Pain Points</h2>
+        <p class="section-sub">Be brutally honest here. The more specific you are about what's broken, the better your audit will be.</p>
+
+        <div class="field-group">
+          <label for="goal12mo">What is your #1 business goal for the next 12 months? <span class="req">*</span></label>
+          <textarea id="goal12mo" name="goal12mo" placeholder="e.g. Hit $500K in revenue, launch a second location, close 20 recurring retainers, hire a team of 5..."></textarea>
+          <p class="field-error" id="err-goal12mo">Please share your #1 goal.</p>
+        </div>
+
+        <div class="field-group">
+          <label for="dreamOutcome">What does your dream outcome look like after working with us? <span class="req">*</span></label>
+          <textarea id="dreamOutcome" name="dreamOutcome" placeholder="Paint the picture. What does your business look like 90 days after we've implemented everything? What's different?"></textarea>
+          <p class="field-error" id="err-dreamOutcome">Please describe your dream outcome.</p>
+        </div>
+
+        <div class="field-group">
+          <label for="biggestProblem">What is your biggest problem or bottleneck right now? <span class="req">*</span></label>
+          <textarea id="biggestProblem" name="biggestProblem" placeholder="e.g. We can't keep up with lead follow-up. We lose clients between quote and close. Our onboarding takes 4 weeks and clients hate it..."></textarea>
+          <p class="field-error" id="err-biggestProblem">Please describe your biggest bottleneck.</p>
+        </div>
+
+        <div class="field-group">
+          <label for="alreadyTried">What have you already tried to solve it? <span class="req">*</span></label>
+          <textarea id="alreadyTried" name="alreadyTried" placeholder="e.g. Hired a VA, tried Zapier automations, bought a CRM, took a course... Be specific about what worked and what didn't."></textarea>
+          <p class="field-error" id="err-alreadyTried">Please tell us what you've already tried.</p>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-teal" onclick="nextStep()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-ghost" onclick="prevStep()">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- STEP 5 — Workflows & Tools                      -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="step" id="step5">
+      <div class="card">
+        <p class="section-title">Section 5</p>
+        <h2 class="section-heading">Workflows &amp; Tools</h2>
+        <p class="section-sub">This is where we find the automation gold. Walk us through how work actually gets done.</p>
+
+        <div class="field-group">
+          <label for="criticalWorkflows">Describe your 2–3 most critical business workflows <span class="req">*</span></label>
+          <textarea id="criticalWorkflows" name="criticalWorkflows" class="large" placeholder="e.g.&#10;1. LEAD FOLLOW-UP: New lead enters GHL → VA calls within 10 min → if no answer, text is sent → follow up daily for 5 days manually...&#10;2. CLIENT ONBOARDING: After payment, we email a PDF welcome guide → schedule kickoff call manually → create a Notion project by hand...&#10;3. INVOICING: Invoice is created in QuickBooks → emailed manually → we chase payment by phone after 14 days..."></textarea>
+          <p class="field-error" id="err-criticalWorkflows">Please describe your key workflows.</p>
+        </div>
+
+        <div class="field-group">
+          <label for="currentTools">What tools and software are you currently using? <span class="req">*</span></label>
+          <textarea id="currentTools" name="currentTools" placeholder="e.g. GoHighLevel (CRM), QuickBooks (accounting), Calendly (scheduling), Notion (project management), Canva, Stripe, Shopify, Slack, Zoom..."></textarea>
+          <p class="field-error" id="err-currentTools">Please list your current tools.</p>
+        </div>
+
+        <div class="field-group">
+          <label for="wishAutomated">What do you currently do manually that you wish was automated? <span class="req">*</span></label>
+          <textarea id="wishAutomated" name="wishAutomated" placeholder="e.g. Sending follow-up emails, creating invoices, posting to social media, entering leads into the CRM, scheduling reminders, pulling weekly reports..."></textarea>
+          <p class="field-error" id="err-wishAutomated">Please describe what you'd like automated.</p>
+        </div>
+
+        <div class="field-group">
+          <label for="techSavvy">On a scale of 1–10, how tech-savvy is your team? <span class="req">*</span></label>
+          <div class="range-wrap">
+            <input type="range" id="techSavvy" name="techSavvy" min="1" max="10" value="5"
+                   oninput="document.getElementById('techSavvyVal').textContent = this.value" />
+            <span class="range-value" id="techSavvyVal">5</span>
+          </div>
+          <div class="range-labels">
+            <span>1 — Not at all</span>
+            <span>10 — Power users</span>
+          </div>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-teal" onclick="nextStep()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-ghost" onclick="prevStep()">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- STEP 6 — Key Metrics                            -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="step" id="step6">
+      <div class="card">
+        <p class="section-title">Section 6</p>
+        <h2 class="section-heading">Key Metrics</h2>
+        <p class="section-sub">Numbers don't lie. Give us your best estimates — ballpark figures are fine if exact numbers aren't at hand.</p>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="monthlyRevenue">Monthly Revenue (avg) <span class="req">*</span></label>
+            <input type="number" id="monthlyRevenue" name="monthlyRevenue" placeholder="e.g. 25000" min="0" />
+            <p class="hint">Average monthly gross revenue in USD</p>
+            <p class="field-error" id="err-monthlyRevenue">Please enter your average monthly revenue.</p>
+          </div>
+          <div class="field-group">
+            <label for="monthlyExpenses">Monthly Expenses (avg) <span class="req">*</span></label>
+            <input type="number" id="monthlyExpenses" name="monthlyExpenses" placeholder="e.g. 12000" min="0" />
+            <p class="hint">Average monthly total outgoings in USD</p>
+            <p class="field-error" id="err-monthlyExpenses">Please enter your average monthly expenses.</p>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="monthlyProfit">Monthly Profit (avg) <span class="req">*</span></label>
+            <input type="number" id="monthlyProfit" name="monthlyProfit" placeholder="e.g. 13000" min="0" />
+            <p class="hint">Revenue minus expenses</p>
+            <p class="field-error" id="err-monthlyProfit">Please enter your average monthly profit.</p>
+          </div>
+          <div class="field-group">
+            <label for="adminHours">Hours/week spent on admin &amp; manual tasks <span class="req">*</span></label>
+            <input type="number" id="adminHours" name="adminHours" placeholder="e.g. 15" min="0" max="168" />
+            <p class="hint">Honest estimate — include your whole team</p>
+            <p class="field-error" id="err-adminHours">Please enter your weekly admin hours.</p>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="revenueLeak">Biggest revenue leak or waste <span class="req">*</span></label>
+          <textarea id="revenueLeak" name="revenueLeak" placeholder="e.g. We lose $3K/month chasing unpaid invoices. We spend 10 hours/week on tasks a $20/hr VA could handle. Our no-show rate on sales calls is 40%..."></textarea>
+          <p class="field-error" id="err-revenueLeak">Please describe your biggest revenue leak.</p>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-teal" onclick="nextStep()">
+            Next
+            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-ghost" onclick="prevStep()">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- STEP 7 — Additional Context                     -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="step" id="step7">
+      <div class="card">
+        <p class="section-title">Section 7</p>
+        <h2 class="section-heading">Additional Context</h2>
+        <p class="section-sub">Final details so we can show up fully prepared on your call.</p>
+
+        <div class="field-group">
+          <label for="anythingElse">Is there anything else we should know before our call? <span class="opt">(optional)</span></label>
+          <textarea id="anythingElse" name="anythingElse" class="large" placeholder="Partnerships, legal constraints, recent pivots, team dynamics, technology in-flight, anything that gives us context..."></textarea>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="hearAbout">How did you hear about Better Total Marketing? <span class="req">*</span></label>
+            <select id="hearAbout" name="hearAbout">
+              <option value="">— Select one —</option>
+              <option value="referral">Referral</option>
+              <option value="social-media">Social Media</option>
+              <option value="google">Google</option>
+              <option value="event">Event / Conference</option>
+              <option value="other">Other</option>
+            </select>
+            <p class="field-error" id="err-hearAbout">Please tell us how you found us.</p>
+          </div>
+          <div class="field-group">
+            <label for="referralName">Referral name <span class="opt">(optional)</span></label>
+            <input type="text" id="referralName" name="referralName" placeholder="Who referred you? We'd love to thank them." />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="callPrefs">Preferred call time notes <span class="opt">(optional)</span></label>
+          <input type="text" id="callPrefs" name="callPrefs" placeholder='e.g. "Mornings only EST", "After 3pm", "Any time Tue/Thu"' />
+          <p class="hint">We'll use this when scheduling your debrief call.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div style="background: rgba(4,179,180,0.07); border: 1px solid rgba(4,179,180,0.25); border-radius: 8px; padding: 20px 22px; margin-bottom: 8px;">
+          <p style="font-size:0.8rem; color:var(--teal); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px;">You're almost done</p>
+          <p style="font-size:0.88rem; color:var(--muted); line-height:1.6;">Once you submit, your auditor will review every answer before your call. Expect a confirmation email at the address you provided within 24 hours. Come ready to dig in.</p>
+        </div>
+
+        <div class="nav-row">
+          <button class="btn btn-submit" onclick="handleSubmit()">
+            Submit &amp; Prepare for My Call&nbsp;&nbsp;→
+          </button>
+          <button class="btn btn-ghost" onclick="prevStep()">
+            <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- SUCCESS SCREEN                                  -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="card success-screen" id="successScreen">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h2 class="success-heading">You're in the system.</h2>
+      <p class="success-body">
+        Your intake form has been submitted. Your auditor will review every answer before your call
+        and arrive fully prepared to map your biggest opportunities.
+        <br/><br/>
+        Expect a confirmation email within 24 hours. In the meantime — stay focused.
+      </p>
+      <p class="success-motto">GRIND THROUGH IT ALL.®</p>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER ───────────────────────────────────────── -->
+  <footer>
+    <p class="footer-motto">GRIND THROUGH IT ALL.®</p>
+    <p class="footer-contact">
+      <a href="mailto:info@btcaams.org">info@btcaams.org</a>
+      &nbsp;·&nbsp;
+      <a href="index.html">Better Total Marketing</a>
+    </p>
+  </footer>
+
+  <script>
+    // ── State ───────────────────────────────────────────
+    const TOTAL_STEPS = 7;
+    const SECTION_NAMES = [
+      'Contact Details',
+      'Business Overview',
+      'Customer Journey',
+      'Goals & Pain Points',
+      'Workflows & Tools',
+      'Key Metrics',
+      'Additional Context'
+    ];
+
+    let currentStep = 1;
+
+    // ── Validation map ──────────────────────────────────
+    // Each entry: { id, type, label }
+    // type: 'text' | 'email' | 'select' | 'url' | 'number' | 'textarea'
+    const REQUIRED_BY_STEP = {
+      1: [
+        { id: 'fullName',     type: 'text' },
+        { id: 'email',        type: 'email' },
+        { id: 'phone',        type: 'text' },
+        { id: 'businessName', type: 'text' },
+        { id: 'website',      type: 'url' },
+        { id: 'industry',     type: 'text' }
+      ],
+      2: [
+        { id: 'bizDescription', type: 'textarea' },
+        { id: 'revenue',        type: 'select' },
+        { id: 'yearsInBiz',     type: 'select' },
+        { id: 'employees',      type: 'select' }
+      ],
+      3: [
+        { id: 'customerJourney', type: 'textarea' },
+        { id: 'timeToClose',     type: 'text' },
+        { id: 'avgOrderValue',   type: 'number' }
+      ],
+      4: [
+        { id: 'goal12mo',       type: 'textarea' },
+        { id: 'dreamOutcome',   type: 'textarea' },
+        { id: 'biggestProblem', type: 'textarea' },
+        { id: 'alreadyTried',   type: 'textarea' }
+      ],
+      5: [
+        { id: 'criticalWorkflows', type: 'textarea' },
+        { id: 'currentTools',      type: 'textarea' },
+        { id: 'wishAutomated',     type: 'textarea' }
+      ],
+      6: [
+        { id: 'monthlyRevenue',  type: 'number' },
+        { id: 'monthlyExpenses', type: 'number' },
+        { id: 'monthlyProfit',   type: 'number' },
+        { id: 'adminHours',      type: 'number' },
+        { id: 'revenueLeak',     type: 'textarea' }
+      ],
+      7: [
+        { id: 'hearAbout', type: 'select' }
+      ]
+    };
+
+    // ── Validation helpers ──────────────────────────────
+    function isValidEmail(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+    }
+
+    function isValidUrl(v) {
+      try {
+        const u = new URL(v.trim().startsWith('http') ? v.trim() : 'https://' + v.trim());
+        return u.hostname.includes('.');
+      } catch { return false; }
+    }
+
+    function validateStep(step) {
+      const fields = REQUIRED_BY_STEP[step] || [];
+      let valid = true;
+
+      fields.forEach(f => {
+        const el = document.getElementById(f.id);
+        const errEl = document.getElementById('err-' + f.id);
+        const val = el ? el.value.trim() : '';
+        let fieldOk = true;
+
+        if (!val) {
+          fieldOk = false;
+        } else if (f.type === 'email' && !isValidEmail(val)) {
+          fieldOk = false;
+        } else if (f.type === 'url' && !isValidUrl(val)) {
+          fieldOk = false;
+        } else if (f.type === 'number' && isNaN(parseFloat(val))) {
+          fieldOk = false;
+        }
+
+        if (el) {
+          el.classList.toggle('invalid', !fieldOk);
+        }
+        if (errEl) {
+          errEl.classList.toggle('visible', !fieldOk);
+        }
+        if (!fieldOk) valid = false;
+      });
+
+      return valid;
+    }
+
+    // Clear validation state when user starts typing
+    document.addEventListener('input', function(e) {
+      const el = e.target;
+      if (el.classList.contains('invalid')) {
+        el.classList.remove('invalid');
+        const errEl = document.getElementById('err-' + el.id);
+        if (errEl) errEl.classList.remove('visible');
+      }
+    });
+
+    document.addEventListener('change', function(e) {
+      const el = e.target;
+      if (el.classList.contains('invalid')) {
+        el.classList.remove('invalid');
+        const errEl = document.getElementById('err-' + el.id);
+        if (errEl) errEl.classList.remove('visible');
+      }
+    });
+
+    // ── Step navigation ─────────────────────────────────
+    function showStep(n) {
+      const prev = document.getElementById('step' + currentStep);
+      const next = document.getElementById('step' + n);
+
+      if (prev) {
+        prev.classList.add('exiting');
+        setTimeout(() => {
+          prev.classList.remove('active', 'exiting');
+        }, 320);
+      }
+
+      setTimeout(() => {
+        if (next) {
+          next.classList.add('active');
+        }
+      }, 160);
+
+      currentStep = n;
+      updateProgress();
+    }
+
+    function nextStep() {
+      if (!validateStep(currentStep)) {
+        // Scroll to first error
+        const firstInvalid = document.querySelector('#step' + currentStep + ' .invalid');
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+      if (currentStep < TOTAL_STEPS) {
+        showStep(currentStep + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        showStep(currentStep - 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function handleSubmit() {
+      if (!validateStep(currentStep)) {
+        const firstInvalid = document.querySelector('#step' + currentStep + ' .invalid');
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+      }
+
+      // Hide all steps and progress
+      for (let i = 1; i <= TOTAL_STEPS; i++) {
+        const s = document.getElementById('step' + i);
+        if (s) s.classList.remove('active');
+      }
+      document.getElementById('progressWrap').style.display = 'none';
+
+      const success = document.getElementById('successScreen');
+      success.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── Progress bar & dots ─────────────────────────────
+    function buildDots() {
+      const container = document.getElementById('stepDots');
+      container.innerHTML = '';
+      for (let i = 1; i <= TOTAL_STEPS; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'step-dot';
+        dot.setAttribute('aria-label', 'Go to step ' + i);
+        dot.dataset.step = i;
+        dot.onclick = function() { jumpToStep(parseInt(this.dataset.step)); };
+        container.appendChild(dot);
+      }
+    }
+
+    function jumpToStep(n) {
+      // Only allow jumping to already-visited or current step
+      if (n <= currentStep) {
+        showStep(n);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function updateProgress() {
+      const pct = (currentStep / TOTAL_STEPS) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressLabel').textContent = 'Step ' + currentStep + ' of ' + TOTAL_STEPS;
+      document.getElementById('progressName').textContent = SECTION_NAMES[currentStep - 1];
+
+      const dots = document.querySelectorAll('.step-dot');
+      dots.forEach((dot, idx) => {
+        const s = idx + 1;
+        dot.classList.remove('active', 'done');
+        if (s === currentStep) dot.classList.add('active');
+        else if (s < currentStep) dot.classList.add('done');
+      });
+    }
+
+    // ── Init ────────────────────────────────────────────
+    buildDots();
+    updateProgress();
+  </script>
+</body>
+</html>

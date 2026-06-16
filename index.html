@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Better Total Marketing — We Deliver Customers</title>
+  <meta name="description"
+    content="We shoot the video. We run the system. You just answer the phone. Video-centered marketing for local service businesses that gets your phone ringing." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ── FLOATING NAV (MURSEE-style glass pill) ── -->
+  <header class="nav-wrap">
+    <nav class="nav" id="nav">
+      <a href="#" class="nav-logo"><img src="images/btc_logo.webp" alt="BTC Logo" class="nav-logo-img" /></a>
+      <ul class="nav-links">
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="questionnaire.html" class="btn-outline-sm nav-cta">
+        <span>Get My Audit</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="questionnaire.html" class="btn-red mobile-cta">Get My Audit →</a>
+    </div>
+  </header>
+
+  <!-- ── HERO — MURSEE Immersive Full Screen ── -->
+  <section class="hero" id="hero">
+    <!-- Video background -->
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="video/BTC Website No Logo.mp4" type="video/mp4" />
+    </video>
+    <!-- Dark vignette overlay -->
+    <div class="hero-overlay"></div>
+    <!-- Film grain -->
+    <div class="hero-grain"></div>
+
+    <!-- Main content block -->
+    <div class="hero-content">
+      <p class="hero-label">Growth Consultancy &middot; Augusta, GA</p>
+      <h1 class="hero-headline" data-reveal>
+        Your phone<br />
+        <em>rings more.</em>
+      </h1>
+      <div class="hero-actions" data-reveal>
+        <a href="questionnaire.html" class="btn-outline btn-lg">
+          <span>Find Out What You're Losing</span>
+        </a>
+        <a href="#results" class="hero-secondary-cta">See the results →</a>
+      </div>
+    </div>
+
+    <!-- Bottom MURSEE-style info bar -->
+    <div class="hero-bottom">
+      <!-- Left: Current case study -->
+      <div class="hero-project">
+        <div class="hp-niche" id="heroNiche">Pool &amp; Spa Service</div>
+        <div class="hp-result is-visible" id="heroResult">12 Customers to 31 — in 90 Days</div>
+      </div>
+
+      <!-- Center: Key stats -->
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-num" data-count="43">0</div>
+          <div class="hstat-label">customers<br />last month</div>
+        </div>
+        <div class="hstat-div"></div>
+        <div class="hstat">
+          <div class="hstat-num" data-count="14">0</div>
+          <div class="hstat-label">days to<br />first lead</div>
+        </div>
+        <div class="hstat-div"></div>
+        <div class="hstat">
+          <div class="hstat-num">4.9<em>★</em></div>
+          <div class="hstat-label">client<br />rating</div>
+        </div>
+      </div>
+
+      <!-- Right: Counter + dot nav + scroll -->
+      <div class="hero-nav">
+        <div class="hero-counter">
+          <span id="heroCurrent">01</span>
+          <span class="hc-sep"> / </span>
+          <span>05</span>
+        </div>
+        <div class="hero-dots">
+          <button class="hdot is-active" data-slide="0" aria-label="Slide 1"></button>
+          <button class="hdot" data-slide="1" aria-label="Slide 2"></button>
+          <button class="hdot" data-slide="2" aria-label="Slide 3"></button>
+          <button class="hdot" data-slide="3" aria-label="Slide 4"></button>
+          <button class="hdot" data-slide="4" aria-label="Slide 5"></button>
+        </div>
+        <div class="hero-scroll">
+          <div class="scroll-line"></div>
+          <span>Scroll</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MURSEE progress bar at very bottom -->
+    <div class="hero-bar">
+      <div class="hero-bar-fill" id="heroBarFill"></div>
+    </div>
+  </section>
+
+  <!-- ── TICKER ── -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>We Deliver Customers</span>
+      <span class="t-dot">·</span>
+      <span>Systematic Lead Generation</span>
+      <span class="t-dot">·</span>
+      <span>Professional Video</span>
+      <span class="t-dot">·</span>
+      <span>Ongoing Customer Acquisition</span>
+      <span class="t-dot">·</span>
+      <span>All In One Growth System</span>
+      <span class="t-dot">·</span>
+      <span>We Deliver Customers</span>
+      <span class="t-dot">·</span>
+      <span>Systematic Lead Generation</span>
+      <span class="t-dot">·</span>
+      <span>Professional Video</span>
+      <span class="t-dot">·</span>
+      <span>Ongoing Customer Acquisition</span>
+      <span class="t-dot">·</span>
+      <span>All In One Growth System</span>
+      <span class="t-dot">·</span>
+    </div>
+  </div>
+
+  <!-- ── PROBLEM ── -->
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="problem-layout">
+        <div class="problem-text" data-reveal>
+          <p class="eyebrow">Sound familiar?</p>
+          <h2 class="section-headline">You're great at what<br />you do. Your customers<br /><em>love you.</em></h2>
+          <p class="body-text">But when someone searches online, they find your competitors first. You've tried Google
+            Ads — and got burned. Your website is from years ago. You've never had a professional video. Word of mouth
+            only goes so far.</p>
+          <p class="body-text mt-4">You have money to spend with someone who can actually deliver. Most agencies won't
+            take your call. We built this for you.</p>
+        </div>
+        <div class="pain-stack" data-reveal>
+          <div class="pain-card">
+            <div class="pain-quote">"I get 80% of my customers from referrals. I know I need more but I don't know how
+              to get them online."</div>
+            <div class="pain-src">— Pool service owner</div>
+          </div>
+          <div class="pain-card pain-card-accent">
+            <div class="pain-quote">"HomeAdvisor just sells my leads to 5 other guys. I'm paying for customers I can't
+              close."</div>
+            <div class="pain-src">— Local contractor</div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-quote">"When clients see us on video actually doing the work, they call. The problem is
+              getting in front of them."</div>
+            <div class="pain-src">— HVAC business owner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="section section-alt" id="how">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <p class="eyebrow">The Customer Engine</p>
+        <h2 class="section-headline">Everything you need.<br />Nothing you don't.</h2>
+      </div>
+      <div class="steps">
+        <div class="step" data-reveal>
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <div class="step-tag">2 Minutes</div>
+            <h3 class="step-title">Tell us about your business</h3>
+            <p class="body-text">Walk us through how you get customers today, what's working, and where you're losing
+              them. We review every answer before we ever get on a call — no wasted time, no recycled pitch. Just a
+              conversation built around your situation.</p>
+            <ul class="step-list">
+              <li>No account needed</li>
+              <li>We review before we call</li>
+              <li>Your answers stay confidential</li>
+            </ul>
+          </div>
+          <div class="step-visual">
+            <div class="mock-browser">
+              <div class="mb-bar"><span class="mb-dot r"></span><span class="mb-dot y"></span><span
+                  class="mb-dot g"></span></div>
+              <div class="mb-body">
+                <div class="mb-hero-bar"></div>
+                <div class="mb-line"></div>
+                <div class="mb-line short"></div>
+                <div class="mb-btn"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step step-flip" data-reveal>
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <div class="step-tag">The Audit</div>
+            <h3 class="step-title">We find exactly where you're losing customers</h3>
+            <p class="body-text">We analyze your online presence, local search ranking, competitor positioning, and lead
+              flow. Then we build a custom growth plan — real numbers showing what's broken, what fixing it is worth,
+              and exactly how we'd do it. A real deliverable, not a sales deck.</p>
+            <ul class="step-list">
+              <li>Custom to your business</li>
+              <li>Real numbers, not vanity metrics</li>
+              <li>Delivered within 5 business days</li>
+            </ul>
+          </div>
+          <div class="step-visual">
+            <div class="mock-video">
+              <div class="mv-play">▶</div>
+              <div class="mv-title">Your Growth Audit</div>
+              <div class="mv-bar">
+                <div class="mv-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step" data-reveal>
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <div class="step-tag">Ongoing System</div>
+            <h3 class="step-title">We execute. Your phone rings.</h3>
+            <p class="body-text">Video, content, SEO, and ads — all in one system, run entirely by us. You stay focused
+              on delivering the service. We stay focused on delivering the customers. Every month you get a plain-language
+              report showing exactly how many customers came from us.</p>
+            <ul class="step-list">
+              <li>Month-over-month growth</li>
+              <li>Plain-language reporting</li>
+              <li>You measure success in customers</li>
+            </ul>
+          </div>
+          <div class="step-visual">
+            <div class="mock-dash">
+              <div class="md-row">
+                <div class="md-card">
+                  <div class="md-num">31</div>
+                  <div class="md-lbl">Customers</div>
+                </div>
+                <div class="md-card">
+                  <div class="md-num">↑82%</div>
+                  <div class="md-lbl">Calls</div>
+                </div>
+              </div>
+              <div class="md-chart">
+                <div class="md-bar md-bar-h1"></div>
+                <div class="md-bar md-bar-h2"></div>
+                <div class="md-bar md-bar-h3"></div>
+                <div class="md-bar md-bar-h4"></div>
+                <div class="md-bar md-bar-red md-bar-h5"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Micro-CTA: catches warm scrollers who skipped the hero CTA -->
+      <div style="text-align:center; margin-top: 56px;" data-reveal>
+        <p style="font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:18px; opacity:0.7;">Ready to see what you're leaving on the table?</p>
+        <a href="questionnaire.html" class="btn-outline">
+          <span>Take the 2-Minute Assessment →</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── RESULTS / CASE STUDIES (MURSEE film-card grid) ── -->
+  <section class="section" id="results">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <p class="eyebrow">Case Studies</p>
+        <h2 class="section-headline">Real businesses.<br />Real numbers.</h2>
+      </div>
+      <div class="work-grid">
+        <div class="work-card" data-reveal>
+          <div class="work-card-bg wc-1"></div>
+          <div class="work-card-content">
+            <div class="wc-niche">YouTube Show & Web Design</div>
+            <div class="wc-metric">
+              <span class="wc-before" data-count="12">12</span>
+              <span class="wc-arrow">→</span>
+              <span class="wc-after" data-count="31">31</span>
+            </div>
+            <div class="wc-label">new customers / month</div>
+            <p class="wc-quote">"Every single video they've produced has been high-quality, creative, and professional. They really understand how to capture the vision and bring it to life on camera."</p>
+            <div class="wc-meta">Thomas Robinson</div>
+          </div>
+        </div>
+        <div class="work-card work-card-tall" data-reveal>
+          <div class="work-card-bg wc-2"></div>
+          <div class="work-card-content">
+            <div class="wc-niche">Brand Video & Web Design</div>
+            <div class="wc-metric">
+              <span class="wc-before" data-count="18" data-prefix="$">$18</span>
+              <span class="wc-arrow">→</span>
+              <span class="wc-after wc-red" data-count="6" data-prefix="$">$6</span>
+            </div>
+            <div class="wc-label">cost per customer acquired</div>
+            <p class="wc-quote">"Everything was super smooth, top quality, and professional! If you're undecided on choosing a company to help you with your brand presence through video, web design, and more — I recommend BTC!"</p>
+            <div class="wc-meta">Shawn Abrams</div>
+          </div>
+        </div>
+        <div class="work-card" data-reveal>
+          <div class="work-card-bg wc-3"></div>
+          <div class="work-card-content">
+            <div class="wc-niche">Smashed Mouth Lemonade</div>
+            <div class="wc-metric">
+              <span class="wc-before">0</span>
+              <span class="wc-arrow">→</span>
+              <span class="wc-after" data-count="22">22</span>
+            </div>
+            <div class="wc-label">online leads in first month</div>
+            <p class="wc-quote">"The final product captured my brand beautifully and exceeded my expectations. They're truly a partner you can trust to elevate your business."</p>
+            <div class="wc-meta">Ashley Brown · Smashed Mouth Lemonade</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY WE'RE DIFFERENT ── -->
+  <section class="section section-alt" id="why">
+    <div class="container">
+      <div class="free-layout" data-reveal>
+        <div class="free-text">
+          <p class="eyebrow">Why we're different</p>
+          <h2 class="section-headline">Most agencies charge $20K a month and still can't tell you how many customers you
+            got.</h2>
+          <p class="body-text">We do the opposite. Video, strategy, and content — all in one system, priced at 5–10×
+            below what you'd pay building it yourself. And every result is measured in the only number that matters:
+            customers.</p>
+          <p class="body-text mt-4 text-accent-bold">You answer the phone. We handle everything else.</p>
+          <a href="#pricing" class="btn-red btn-standalone">See What's Included →</a>
+        </div>
+        <div class="compare-wrap">
+          <div class="compare-col compare-them">
+            <div class="compare-head">Other Agencies</div>
+            <div class="compare-row bad">$3K–$10K website upfront</div>
+            <div class="compare-row bad">No video included</div>
+            <div class="compare-row bad">Lock you in, then disappear</div>
+            <div class="compare-row bad">Vanity metrics reporting</div>
+            <div class="compare-row bad">Serve every industry</div>
+          </div>
+          <div class="compare-col compare-us">
+            <div class="compare-head">Better Total Marketing</div>
+            <div class="compare-row good">5–10× value on every package</div>
+            <div class="compare-row good">Professional video every month</div>
+            <div class="compare-row good">We don't start unless we can help</div>
+            <div class="compare-row good">Plain-language monthly reports</div>
+            <div class="compare-row good">Built for local service businesses</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT / TEAM ── -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="team-slider" data-reveal>
+        <div class="team-slider-header">
+          <p class="eyebrow">The people behind the system</p>
+        </div>
+
+        <div class="team-slides-wrap">
+
+          <!-- Brandon Cobb -->
+          <div class="team-slide is-active">
+            <div class="team-slide-media">
+              <img src="images/Brandon Cobb.webp" alt="Brandon Cobb — CEO" class="team-slide-img" />
+              <div class="team-slide-badge">Chief Executive Officer</div>
+            </div>
+            <div class="team-slide-text">
+              <h3 class="team-slide-name">Brandon Cobb</h3>
+              <p class="team-slide-bio">I built this company because I believe great local service businesses deserve
+                world-class marketing — not excuses. As a third-degree black belt, I know what it takes to train for a
+                result and execute under pressure. I bring that same discipline to every campaign, every client, and
+                every system we build. We don't take on anyone we can't help. And when we do, we don't stop.</p>
+              <div class="about-chips">
+                <span class="chip">3rd Degree Black Belt</span>
+                <span class="chip">Strategic Leadership</span>
+                <span class="chip">Creative Direction</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Jaylin Moore -->
+          <div class="team-slide">
+            <div class="team-slide-media">
+              <img src="images/Jaylin Moore.webp" alt="Jaylin Moore — CMO" class="team-slide-img" />
+              <div class="team-slide-badge">Chief Marketing Officer</div>
+            </div>
+            <div class="team-slide-text">
+              <h3 class="team-slide-name">Jaylin Moore</h3>
+              <p class="team-slide-bio">I kept seeing the same thing: great local service businesses hemorrhaging money
+                on agencies that don't understand them, or avoiding marketing altogether because they've been burned
+                before. So I built a system that actually works — no vanity metrics, no recycled templates. Just a clear
+                strategy, plain-language reporting, and a content engine that gets your phone ringing consistently.
+                Every client I take on, I treat like my own business.</p>
+              <div class="about-chips">
+                <span class="chip">Outcome-first</span>
+                <span class="chip">No vanity metrics</span>
+                <span class="chip">Plain-language reporting</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Martin Pope -->
+          <div class="team-slide">
+            <div class="team-slide-media">
+              <img src="images/Martin Pope.webp" alt="Martin Pope — COO" class="team-slide-img" />
+              <div class="team-slide-badge">Chief Operating Officer</div>
+            </div>
+            <div class="team-slide-text">
+              <h3 class="team-slide-name">Martin Pope</h3>
+              <p class="team-slide-bio">Every great system needs someone who makes sure it actually runs. That's me. I
+                manage the internal operations — from our CRM to client scheduling to video delivery — so nothing falls
+                through the cracks. When you work with us, you don't have to chase anyone down. Your content ships on
+                time, your strategy stays on track, and the videos look sharp. I make sure of it.</p>
+              <div class="about-chips">
+                <span class="chip">Operations</span>
+                <span class="chip">CRM Management</span>
+                <span class="chip">Video Editing</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="team-nav">
+          <div class="team-counter"><span id="teamCurrent">01</span><span class="hc-sep"> / </span><span>03</span></div>
+          <div class="team-dots">
+            <button class="tdot is-active" data-tslide="0"></button>
+            <button class="tdot" data-tslide="1"></button>
+            <button class="tdot" data-tslide="2"></button>
+          </div>
+        </div>
+        <div class="team-bar">
+          <div class="team-bar-fill" id="teamBarFill"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INVESTMENT ── -->
+  <section class="section section-alt" id="pricing">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <p class="eyebrow">Investment</p>
+        <h2 class="section-headline">Built around your<br /><em>business, not a template.</em></h2>
+        <p class="section-sub">Every engagement is scoped after we understand your business. Here's what most clients invest based on where they are.</p>
+      </div>
+
+      <div class="pricing-grid pricing-grid-3" data-reveal>
+
+        <!-- Tier 1 -->
+        <div class="pricing-card">
+          <div class="pc-tier">Get Found</div>
+          <div class="pc-price"><span class="pc-amount">From $500</span><span class="pc-label">/mo</span></div>
+          <p class="pc-desc">You have little to no online presence. Competitors show up when your potential customers search. We build the foundation — video, content, and a consistent presence — so you start getting found.</p>
+          <ul class="pc-list">
+            <li>Video content produced monthly</li>
+            <li>Consistent social presence</li>
+            <li>Monthly strategy &amp; reporting</li>
+          </ul>
+          <a href="questionnaire.html" class="btn-outline btn-block">Start My Assessment →</a>
+        </div>
+
+        <!-- Tier 2 — Featured -->
+        <div class="pricing-card pricing-card-feat">
+          <div class="pc-badge">Most Popular</div>
+          <div class="pc-tier">Get Leads</div>
+          <div class="pc-price"><span class="pc-amount">From $1,000</span><span class="pc-label">/mo</span></div>
+          <p class="pc-desc">You're visible but not generating consistent inbound. We layer in SEO, more video, multi-platform distribution, and a reporting system that tells you exactly how many customers came from us.</p>
+          <ul class="pc-list">
+            <li>More video, more platforms</li>
+            <li>Local SEO &amp; Google optimization</li>
+            <li>Plain-language monthly reports</li>
+          </ul>
+          <a href="questionnaire.html" class="btn-red btn-block">Start My Assessment →</a>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="pricing-card">
+          <div class="pc-tier">Dominate</div>
+          <div class="pc-price"><span class="pc-amount">From $1,750</span><span class="pc-label">/mo</span></div>
+          <p class="pc-desc">You're ready to own your market. Full video production, SEO, press, testimonial campaigns, and a content engine that makes you the undeniable first choice before a prospect ever picks up the phone.</p>
+          <ul class="pc-list">
+            <li>Full video &amp; content production</li>
+            <li>SEO, press &amp; reputation management</li>
+            <li>Full analytics &amp; growth strategy</li>
+          </ul>
+          <a href="questionnaire.html" class="btn-outline btn-block">Start My Assessment →</a>
+        </div>
+
+      </div>
+
+      <div class="pricing-footer" data-reveal>
+        <p>Not sure which fits? <a href="questionnaire.html" class="pricing-footer-link">Take the 7-question assessment →</a> and we'll tell you exactly what makes sense for your business and budget.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <p class="eyebrow">FAQ</p>
+        <h2 class="section-headline">Everything you want<br />to know before you call.</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item" data-reveal>
+          <button class="faq-q">What types of businesses do you work best with? <span class="faq-icon">+</span></button>
+          <div class="faq-a">
+            <p>High-margin local service businesses — pool &amp; spa, HVAC, roofing, landscaping, commercial cleaning,
+              junk removal. The common thread: great service, happy customers, and almost no systematic way to get new
+              ones online. If that's you, we built this for you. We don't work with tech startups or e-commerce brands.
+              That focus is why we're good at what we do.</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-q">How long until I see results? <span class="faq-icon">+</span></button>
+          <div class="faq-a">
+            <p>Most clients see their first new lead within 14 days of their first campaign going live. Meaningful, consistent
+              results build over 60–90 days as SEO compounds and video ads optimize. We measure and report
+              this monthly so you always know exactly where you stand.</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-q">What if I'm already running Google Ads? <span class="faq-icon">+</span></button>
+          <div class="faq-a">
+            <p>Great — we'll audit what's working and what's bleeding. Most businesses running ads without a
+              conversion-optimized website and video are paying far too much per lead. We fix the foundation first, then
+              your existing ad spend goes further.</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-q">What if it doesn't work? <span class="faq-icon">+</span></button>
+          <div class="faq-a">
+            <p>We don't take on clients we can't help. Before we start, we review your questionnaire and assess your
+              business and local competition. If we don't believe we can deliver real results, we'll tell you and point
+              you in the right direction. We'd rather walk away than under-deliver.</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-q">Do I need video equipment or experience? <span class="faq-icon">+</span></button>
+          <div class="faq-a">
+            <p>None. We handle everything — scheduling, shoot day, editing, and placement. All you need to do is show up
+              and do what you do every day. We capture it professionally and turn it into the proof that sells before
+              prospects ever call you.</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-q">What's the minimum commitment? <span class="faq-icon">+</span></button>
+          <div class="faq-a">
+            <p>Six months. Customer acquisition is a compounding system, not a one-month switch. SEO takes time to
+              build. Video ads need data to optimize. We need six months to deliver the results we're promising — and
+              clients who stay beyond six months almost never leave.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUESTIONNAIRE CTA ── -->
+  <section class="section cta-section" id="audit">
+    <div class="cta-glow"></div>
+    <div class="container">
+      <div class="cta-inner" data-reveal>
+        <p class="eyebrow eyebrow-dim">Every month without a system is money left behind.</p>
+        <h2 class="cta-headline">How much are you<br /><em>losing right now?</em></h2>
+        <p class="cta-sub">Most local service businesses lose 4–6 customers a month to competitors who simply show up
+          online first. You do great work. But if someone can't find you — or doesn't trust what they see — they're
+          calling someone else. Take our client questionnaire and we'll show you exactly where the leaks are
+          and what fixing them is actually worth.</p>
+        <div class="cta-trust-bar">
+          <div class="cta-trust-stat"><span class="cta-trust-num">14</span><span class="cta-trust-label">Days to first lead</span></div>
+          <div class="cta-trust-div"></div>
+          <div class="cta-trust-stat"><span class="cta-trust-num">4.9★</span><span class="cta-trust-label">Client rating</span></div>
+          <div class="cta-trust-div"></div>
+          <div class="cta-trust-stat"><span class="cta-trust-num">6mo</span><span class="cta-trust-label">Avg. client stay</span></div>
+        </div>
+        <a href="questionnaire.html" class="btn-red btn-submit">
+          Find Out What You're Losing →
+        </a>
+        <p class="form-note">Takes less than 10 minutes. We'll review your answers and reach out within 24 hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo"><img src="images/btc_logo.webp" alt="BTC Logo" class="footer-logo-img" /></div>
+          <p>Better Total Marketing<br />Augusta, GA · Serving businesses nationwide</p>
+        </div>
+        <nav class="footer-links">
+          <a href="#how">How It Works</a>
+          <a href="#results">Results</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#about">About</a>
+          <a href="#faq">FAQ</a>
+          <a href="questionnaire.html">Get Started</a>
+        </nav>
+        <div class="footer-contact">
+          <p class="footer-contact-label">Ready to talk?</p>
+          <a href="mailto:info@btcaams.org" class="footer-email">info@btcaams.org</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Better Total Marketing. All rights reserved.</p>
+        <p class="footer-sub">We measure success in customers delivered.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
