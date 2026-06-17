@@ -33,7 +33,7 @@
   --r-full: 9999px;
 }
 
-html { scroll-behavior: smooth; background: var(--black); }
+html { background: var(--black); }
 
 body {
   font-family: var(--font-body);
@@ -327,28 +327,83 @@ img { display: block; max-width: 100%; }
 
 .mobile-cta { margin-top: 20px; align-self: flex-start; }
 
-/* 5. HERO — MURSEE Immersive Full Screen
+/* 5. HERO — Scroll-Driven Camera Animation
 --------------------------------------------------------------------- */
+
+/* Outer section: scroll space for the animation (400vh = slow, cinematic feel) */
 .hero {
   position: relative;
+  height: 400vh;
+}
+
+/* Inner sticky container: stays in viewport while user scrolls */
+.hero-sticky {
+  position: sticky;
+  top: 0;
   height: 100svh;
   min-height: 620px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding-bottom: 180px;
+  justify-content: flex-start;
+  padding-top: 110px;
 }
 
-/* Video background */
-.hero-video {
+/* Frame canvas fills the sticky viewport */
+#camCanvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   z-index: 0;
+  display: block;
 }
+
+/* ── Loader ── */
+.cam-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  transition: opacity 0.6s ease;
+}
+.cam-loader.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.cam-loader-logo {
+  height: 36px;
+  width: auto;
+  opacity: 0.85;
+}
+.cam-loader-text {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--w40);
+}
+.cam-loader-track {
+  width: 180px;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.cam-loader-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--red);
+  border-radius: 2px;
+  transition: width 0.15s linear;
+}
+
 
 /* Gradient overlay for text legibility */
 .hero-overlay {
@@ -477,16 +532,18 @@ img { display: block; max-width: 100%; }
 }
 
 .hp-result {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 900;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  font-style: italic;
   color: var(--white);
-  text-transform: uppercase;
-  letter-spacing: -0.3px;
-  line-height: 1.1;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.6;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.4s ease, transform 0.4s ease;
+  max-width: 400px;
 }
 
 .hp-result.is-visible {
@@ -673,12 +730,25 @@ img { display: block; max-width: 100%; }
   border-color: rgba(4,179,180,0.15);
 }
 
-.pain-quote {
+.pain-stat {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--red);
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+
+.pain-card-accent .pain-stat {
+  color: #04b3b4;
+}
+
+.pain-claim {
   font-size: 15px;
   line-height: 1.75;
   color: var(--w60);
-  font-style: italic;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .pain-src {
@@ -686,7 +756,7 @@ img { display: block; max-width: 100%; }
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--w40);
+  color: var(--w30);
 }
 
 /* 8. HOW IT WORKS
@@ -908,7 +978,223 @@ img { display: block; max-width: 100%; }
 .md-bar-h4   { height: 80%; }
 .md-bar-h5   { height: 96%; }
 
-/* 9. RESULTS / WORK GRID (MURSEE film cards)
+/* 9. RESULTS — TESTIMONIAL CAROUSEL
+--------------------------------------------------------------------- */
+
+/* ── Outer clip mask ── */
+.tcar-outer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 8px 0 12px;
+}
+
+/* ── Sliding track ── */
+.tcar-track {
+  display: flex;
+  gap: 20px;
+  padding: 0 calc((100vw - 1200px) / 2);
+  will-change: transform;
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Individual card ── */
+.tcar-card {
+  flex-shrink: 0;
+  width: 360px;
+  min-height: 560px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-top: 2px solid rgba(220, 50, 50, 0.35);
+  border-radius: 20px;
+  padding: 0 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.tcar-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,255,255,0.14);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+.tcar-card-accent {
+  border-top-color: rgba(4, 179, 180, 0.45);
+  background: rgba(4, 179, 180, 0.03);
+}
+
+/* ── Pad all card children except the image ── */
+.tcar-card > *:not(.tcar-card-img) {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+.tcar-card > *:nth-child(2) { margin-top: 8px; }
+
+/* ── Top row: stars + badge ── */
+.tcar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tcar-stars {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #f5a623;
+}
+
+.tcar-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 3px 7px;
+}
+
+/* ── Metric row ── */
+.tcar-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.tcar-before {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.28);
+  letter-spacing: -0.5px;
+}
+
+.tcar-arr {
+  font-size: 16px;
+  color: rgba(255,255,255,0.2);
+}
+
+.tcar-after {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.tcar-red { color: var(--red); }
+
+.tcar-unit {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--w40);
+  align-self: flex-end;
+  padding-bottom: 5px;
+}
+
+/* ── Card image ── */
+.tcar-card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Quote ── */
+.tcar-quote {
+  font-size: 13.5px;
+  line-height: 1.72;
+  color: rgba(255,255,255,0.68);
+  font-style: italic;
+  flex: 1;
+}
+
+/* ── Footer ── */
+.tcar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.tcar-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.tcar-service {
+  font-size: 11px;
+  color: var(--red);
+  letter-spacing: 0.5px;
+}
+
+/* ── Arrow buttons ── */
+.tcar-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(8,8,8,0.8);
+  backdrop-filter: blur(12px);
+  color: var(--white);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+  z-index: 5;
+}
+
+.tcar-arrow:hover {
+  background: rgba(220,50,50,0.2);
+  border-color: rgba(220,50,50,0.4);
+}
+
+.tcar-prev { left: 20px; }
+.tcar-next { right: 20px; }
+
+/* ── Dot indicators ── */
+.tcar-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 28px;
+}
+
+.tcar-dot {
+  width: 24px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s, width 0.3s;
+}
+
+.tcar-dot.is-active {
+  width: 40px;
+  background: var(--red);
+}
+
+/* Legacy work-grid (kept for any other uses)
 --------------------------------------------------------------------- */
 .work-grid {
   display: grid;
@@ -926,56 +1212,115 @@ img { display: block; max-width: 100%; }
   flex-direction: column;
   justify-content: flex-end;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.5);
 }
 
-.work-card:hover { transform: scale(1.01); }
+.work-card:hover {
+  transform: translateY(-4px) scale(1.005);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.7);
+}
+
 .work-card.work-card-tall { min-height: 480px; }
 
-/* Film-style gradient background for each card */
+/* Background layer */
 .work-card-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease;
 }
+.work-card:hover .work-card-bg { transform: scale(1.04); }
 
-/* Overlay gradient to ensure text legibility */
+/* Deep text legibility gradient */
 .work-card::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.05) 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.96) 0%,
+    rgba(0,0,0,0.6)  45%,
+    rgba(0,0,0,0.15) 80%,
+    rgba(0,0,0,0.05) 100%
+  );
   z-index: 1;
 }
 
-.wc-1 { background: linear-gradient(145deg, #1a2a4a 0%, #0d1520 100%); }
-.wc-2 { background: linear-gradient(145deg, #2a1a1a 0%, #1a0d0d 100%); }
-.wc-3 { background: linear-gradient(145deg, #1a2a1a 0%, #0d1a0d 100%); }
-
-/* Decorative pattern for card backgrounds */
-.wc-1::before, .wc-2::before, .wc-3::before {
+/* ── Card 1: YouTube / Content — midnight blue + warm amber key light ── */
+.wc-1 {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(255,175,55,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 75%, rgba(80,130,255,0.18) 0%, transparent 50%),
+    linear-gradient(150deg, #0c1628 0%, #080810 55%, #08080c 100%);
+}
+.wc-1::before {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.15;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='0.5' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+  z-index: 0;
 }
-.wc-1::before { background: radial-gradient(circle at 30% 30%, #4a80ff, transparent 60%); }
-.wc-2::before { background: radial-gradient(circle at 70% 30%, var(--red), transparent 60%); }
-.wc-3::before { background: radial-gradient(circle at 50% 20%, #4aff80, transparent 60%); }
+.wc-1 .work-card-content { border-top: 2px solid rgba(255,175,55,0.4); }
+
+/* ── Card 2: Brand Video — pitch black + red spot + teal counter-light ── */
+.wc-2 {
+  background:
+    radial-gradient(ellipse at 65% 12%, rgba(220,45,45,0.4) 0%, transparent 48%),
+    radial-gradient(ellipse at 12% 85%, rgba(4,179,180,0.14) 0%, transparent 42%),
+    radial-gradient(ellipse at 85% 80%, rgba(0,0,0,0.8) 0%, transparent 60%),
+    linear-gradient(150deg, #110809 0%, #080808 55%, #08080f 100%);
+}
+.wc-2::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255,255,255,0.012) 3px,
+    rgba(255,255,255,0.012) 4px
+  );
+  z-index: 0;
+}
+.wc-2 .work-card-content { border-top: 2px solid rgba(220,45,45,0.5); }
+
+/* ── Card 3: Lemonade Brand — dark earth + golden warmth ── */
+.wc-3 {
+  background:
+    radial-gradient(ellipse at 50% 15%, rgba(255,210,45,0.26) 0%, transparent 52%),
+    radial-gradient(ellipse at 82% 72%, rgba(255,130,25,0.16) 0%, transparent 44%),
+    linear-gradient(150deg, #100e07 0%, #080808 55%, #0c0a04 100%);
+}
+.wc-3::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='0.5' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+  z-index: 0;
+}
+.wc-3 .work-card-content { border-top: 2px solid rgba(255,200,40,0.4); }
 
 .work-card-content {
   position: relative;
   z-index: 2;
-  padding: 28px;
+  padding: 28px 28px 26px;
+  margin-top: auto;
 }
 
 .wc-niche {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--red);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .wc-metric {
@@ -987,14 +1332,15 @@ img { display: block; max-width: 100%; }
 
 .wc-before {
   font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 800;
-  color: rgba(255,255,255,0.3);
+  font-size: 32px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.28);
+  letter-spacing: -0.5px;
 }
 
 .wc-arrow {
-  font-size: 20px;
-  color: rgba(255,255,255,0.3);
+  font-size: 18px;
+  color: rgba(255,255,255,0.25);
 }
 
 .wc-after {
@@ -1009,28 +1355,52 @@ img { display: block; max-width: 100%; }
 .wc-red { color: var(--red); }
 
 .wc-label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
+  letter-spacing: 0.5px;
   color: var(--w40);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.wc-stars {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #f5a623;
+  margin-bottom: 8px;
 }
 
 .wc-quote {
   font-size: 13px;
-  line-height: 1.65;
-  color: var(--w60);
+  line-height: 1.7;
+  color: rgba(255,255,255,0.72);
   font-style: italic;
   margin-bottom: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 .wc-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.wc-name {
   font-size: 11px;
   font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--w60);
+}
+
+.wc-source {
+  font-size: 10px;
+  font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--w40);
+  color: rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding: 2px 7px;
 }
 
 /* 10. FREE WEBSITE SECTION
@@ -1749,6 +2119,8 @@ img { display: block; max-width: 100%; }
 
   .work-grid { grid-template-columns: 1fr 1fr; }
   .work-card.work-card-tall { min-height: 380px; }
+  .tcar-track { padding: 0 32px; }
+  .tcar-card  { width: 320px; }
 
   .team-slide { grid-template-columns: 300px 1fr; gap: 48px; }
   .team-slides-wrap { min-height: 440px; }
@@ -1763,15 +2135,22 @@ img { display: block; max-width: 100%; }
   .footer-inner { gap: 40px; }
 }
 
+/* 1024px — reduce scroll height on tablet */
+@media (max-width: 1024px) {
+  .hero { height: 320vh; }
+}
+
 /* 768px */
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-cta { display: none; }
   .hamburger { display: flex; }
 
-  .hero { padding-bottom: 140px; }
+  .hero { height: 260vh; }
+  .hero-sticky { padding-top: 90px; }
   .hero-headline { font-size: clamp(56px, 14vw, 96px); letter-spacing: -1px; }
-  .hero-bottom {
+
+.hero-bottom {
     grid-template-columns: 1fr auto;
     gap: 16px;
     padding-bottom: 24px;
@@ -1786,6 +2165,9 @@ img { display: block; max-width: 100%; }
 
   .work-grid { grid-template-columns: 1fr; }
   .work-card.work-card-tall { min-height: 340px; }
+  .tcar-track { padding: 0 20px; }
+  .tcar-card  { width: calc(85vw); }
+  .tcar-arrow { display: none; }
 
   .free-layout { grid-template-columns: 1fr; gap: 40px; }
 
@@ -1805,7 +2187,8 @@ img { display: block; max-width: 100%; }
 @media (max-width: 480px) {
   :root { --gutter: 20px; }
 
-  .hero { padding-bottom: 160px; }
+  .hero { height: 220vh; }
+  .hero-sticky { padding-top: 80px; }
   .hero-headline { font-size: 52px; letter-spacing: -0.5px; }
   .hero-sub { font-size: 15px; }
 

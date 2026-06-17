@@ -114,11 +114,16 @@ if (form && submit) {
    ════════════════════════════════════════════════ */
 
 const slides = [
-  { niche: 'Pool & Spa Service',  result: '12 Customers to 31 — in 90 Days'        },
-  { niche: 'HVAC & Plumbing',     result: '9 Leads / Week — Without Paying Angi'   },
-  { niche: 'Roofing & Exterior',  result: '$15K Jobs — Closed Before the First Call'},
-  { niche: 'Commercial Cleaning', result: '1 Video. 3 New Contracts in 60 Days.'    },
-  { niche: 'Lawn & Landscaping',  result: '0 Online Presence. 22 Leads in 30 Days.' },
+  { niche: 'Thomas Robinson', result: 'Exceptional quality and professionalism across video and web design. Demonstrated genuine care with fast turnaround and zero stress.' },
+  { niche: 'Marty P', result: 'Captured beautiful moments with heartfelt detail and breathtaking drone footage. Professional approach combined with genuine investment in the vision.' },
+  { niche: 'Shawn Abrams', result: 'Consistently delivers top-quality work across all services with smooth professionalism. Complete trust and recommendation without hesitation.' },
+  { niche: 'Ashley Brown', result: 'Created a promotional video that captured the brand beautifully and exceeded expectations. Exceptional communication at every step built real partnership trust.' },
+  { niche: 'Cornell Mack', result: 'Wedding day captured perfectly with professional, comfortable direction. Drone footage was a game-changer that elevated the final product.' },
+  { niche: 'Melissa', result: 'Captured every detail with beautiful, thorough photography for events. True skill in storytelling through images with professional excellence.' },
+  { niche: 'Dallas Frazier', result: 'Promotional video perfectly captured business essence and continues driving real attention. Genuine commitment to vision with lasting, measurable results.' },
+  { niche: 'Queen Gregory', result: 'Delivered a timeless brand video that authentically captured the story. Excellent communication, schedule adherence, and vision realization.' },
+  { niche: 'Roneisha Mack', result: 'Captured every special moment with stunning detail and cinematic drone footage. Went above and beyond expectations with professional excellence throughout.' },
+  { niche: 'Danielle Jennings', result: 'Friendly, on-time service across multiple projects with hands-on personal attention. Genuinely helped grow business and earned enthusiastic referrals.' },
 ];
 
 const heroNicheEl   = document.getElementById('heroNiche');
@@ -143,7 +148,7 @@ function goToSlide(idx) {
     heroNicheEl.textContent  = s.niche;
     heroResultEl.textContent = s.result;
     heroResultEl.classList.add('is-visible');
-    heroCurrentEl.textContent = String(idx + 1).padStart(2, '0');
+    if (heroCurrentEl) heroCurrentEl.textContent = String(idx + 1).padStart(2, '0');
     heroDots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
     slideStart = performance.now();
     sliding    = false;
@@ -201,6 +206,253 @@ function tickTeamSlider(now) {
 }
 
 requestAnimationFrame(tickTeamSlider);
+
+/* ════════════════════════════════════════════════
+   SCROLL-DRIVEN CAMERA ANIMATION
+   Frames live in /frames/frame_0001.jpg … frame_NNNN.jpg
+   Run: python3 -m http.server 8080 (can't load from file://)
+   ════════════════════════════════════════════════ */
+
+(function () {
+  const FRAME_COUNT = 97;
+  const FRAME_DIR   = 'frames/';
+
+  const canvas      = document.getElementById('camCanvas');
+  const heroSection = document.getElementById('hero');
+  const loader      = document.getElementById('camLoader');
+  const loaderFill  = document.getElementById('camLoaderFill');
+
+  if (!canvas || !heroSection) return;
+
+  const ctx    = canvas.getContext('2d');
+  const frames = new Array(FRAME_COUNT);
+  let loadedCount  = 0;
+  let currentFrame = -1;
+  let ticking      = false;
+  let allLoaded    = false;
+
+
+  /* ── Canvas resize (Retina-aware) ── */
+  function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width  = window.innerWidth  * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width  = window.innerWidth  + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    if (currentFrame >= 0) drawFrame(currentFrame);
+  }
+  window.addEventListener('resize', resizeCanvas, { passive: true });
+  resizeCanvas();
+
+  /* ── Cover-fit drawing ── */
+  function drawFrame(index) {
+    const img = frames[index];
+    if (!img || !img.complete || !img.naturalWidth) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const cw  = canvas.width;
+    const ch  = canvas.height;
+
+    ctx.clearRect(0, 0, cw, ch);
+
+    const imgRatio    = img.naturalWidth / img.naturalHeight;
+    const canvasRatio = cw / ch;
+    let drawW, drawH, drawX, drawY;
+
+    if (window.innerWidth > 768) {
+      /* Desktop: cover-fit — fills edge-to-edge */
+      if (canvasRatio > imgRatio) {
+        drawW = cw;           drawH = cw / imgRatio;
+      } else {
+        drawH = ch;           drawW = ch * imgRatio;
+      }
+    } else {
+      /* Mobile: slightly zoomed contain — keeps camera centred */
+      const zoom = 1.15;
+      if (canvasRatio > imgRatio) {
+        drawH = ch * zoom;    drawW = drawH * imgRatio;
+      } else {
+        drawW = cw * zoom;    drawH = drawW / imgRatio;
+      }
+    }
+    drawX = (cw - drawW) / 2;
+    drawY = (ch - drawH) / 2;
+
+    ctx.drawImage(img, drawX, drawY, drawW, drawH);
+  }
+
+
+  /* ── Main scroll handler ── */
+  window.addEventListener('scroll', () => {
+    if (!allLoaded || ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const rect       = heroSection.getBoundingClientRect();
+      const scrollable = heroSection.offsetHeight - window.innerHeight;
+      const progress   = Math.min(1, Math.max(0, -rect.top / scrollable));
+      const frameIdx   = Math.min(FRAME_COUNT - 1, Math.floor(progress * FRAME_COUNT));
+
+      if (frameIdx !== currentFrame) {
+        currentFrame = frameIdx;
+        drawFrame(frameIdx);
+      }
+
+      ticking = false;
+    });
+  }, { passive: true });
+
+  /* ── Loader hide ── */
+  function onAllLoaded() {
+    allLoaded = true;
+    if (loader) {
+      loader.classList.add('is-hidden');
+      setTimeout(() => { loader.style.display = 'none'; }, 650);
+    }
+    currentFrame = 0;
+    drawFrame(0);
+  }
+
+  /* ── Fallback: hide loader after 5s even if frames fail ── */
+  setTimeout(() => {
+    if (!allLoaded) {
+      allLoaded = true;
+      if (loader) {
+        loader.classList.add('is-hidden');
+        setTimeout(() => { loader.style.display = 'none'; }, 650);
+      }
+    }
+  }, 5000);
+
+  /* ── Preload all frames ── */
+  for (let i = 1; i <= FRAME_COUNT; i++) {
+    const img = new Image();
+    const pad = String(i).padStart(4, '0');
+    img.src    = FRAME_DIR + 'frame_' + pad + '.jpg';
+    img.onload = img.onerror = () => {
+      loadedCount++;
+      if (loaderFill) loaderFill.style.width = (loadedCount / FRAME_COUNT * 100) + '%';
+      if (loadedCount === FRAME_COUNT) onAllLoaded();
+    };
+    frames[i - 1] = img;
+  }
+})();
+
+/* ════════════════════════════════════════════════
+   TESTIMONIAL CAROUSEL — auto-advances every 6s
+   ════════════════════════════════════════════════ */
+(function () {
+  const outer  = document.getElementById('tCarOuter');
+  const track  = document.getElementById('tCarTrack');
+  const dotsEl = document.getElementById('tCarDots');
+  const btnPrev = document.getElementById('tCarPrev');
+  const btnNext = document.getElementById('tCarNext');
+
+  if (!track) return;
+
+  const CARD_W   = 360;
+  const GAP      = 20;
+  const STEP     = CARD_W + GAP;
+  const INTERVAL = 6000;
+
+  /* Clone cards for seamless infinite loop */
+  const originals  = Array.from(track.children);
+  const totalCards = originals.length;
+  originals.forEach(c => track.appendChild(c.cloneNode(true)));
+
+  let idx        = 0;
+  let timer      = null;
+  let busy       = false;
+  let touchStartX = 0;
+
+  /* ── Build dots ── */
+  originals.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'tcar-dot' + (i === 0 ? ' is-active' : '');
+    d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    d.addEventListener('click', () => { stop(); jumpTo(i); start(); });
+    dotsEl.appendChild(d);
+  });
+
+  function updateDots(i) {
+    document.querySelectorAll('.tcar-dot')
+      .forEach((d, n) => d.classList.toggle('is-active', n === i % totalCards));
+  }
+
+  /* ── Move track ── */
+  function moveTo(i, animate) {
+    track.style.transition = animate
+      ? 'transform 0.75s cubic-bezier(0.4, 0, 0.2, 1)'
+      : 'none';
+    track.style.transform = `translateX(${-i * STEP}px)`;
+    idx = i;
+    updateDots(i);
+  }
+
+  /* Snap back when clones are exhausted */
+  track.addEventListener('transitionend', () => {
+    if (idx >= totalCards) {
+      moveTo(idx - totalCards, false);
+    }
+    if (idx < 0) {
+      moveTo(idx + totalCards, false);
+    }
+    busy = false;
+  });
+
+  function next() {
+    if (busy) return;
+    busy = true;
+    moveTo(idx + 1, true);
+  }
+
+  function prev() {
+    if (busy) return;
+    busy = true;
+    if (idx <= 0) {
+      moveTo(totalCards, false);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        moveTo(totalCards - 1, true);
+      }));
+    } else {
+      moveTo(idx - 1, true);
+    }
+  }
+
+  function jumpTo(i) {
+    busy = false;
+    moveTo(i, true);
+  }
+
+  /* ── Auto-timer ── */
+  function start() { timer = setInterval(next, INTERVAL); }
+  function stop()  { clearInterval(timer); }
+
+  /* ── Pause on hover ── */
+  outer.addEventListener('mouseenter', stop);
+  outer.addEventListener('mouseleave', start);
+
+  /* ── Arrow buttons ── */
+  btnPrev.addEventListener('click', () => { stop(); prev(); start(); });
+  btnNext.addEventListener('click', () => { stop(); next(); start(); });
+
+  /* ── Touch / swipe ── */
+  outer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  outer.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) < 40) return;
+    stop();
+    dx < 0 ? next() : prev();
+    start();
+  }, { passive: true });
+
+  /* ── Keyboard ── */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { stop(); prev(); start(); }
+    if (e.key === 'ArrowRight') { stop(); next(); start(); }
+  });
+
+  start();
+})();
 
 /* ── 3-D tilt on pricing cards (desktop only) ── */
 if (window.matchMedia('(hover: hover)').matches) {

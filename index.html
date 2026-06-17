@@ -48,83 +48,81 @@
     </div>
   </header>
 
-  <!-- ── HERO — MURSEE Immersive Full Screen ── -->
+  <!-- ── FRAME LOADER ── -->
+  <div class="cam-loader" id="camLoader">
+    <img src="images/btc_logo.webp" alt="BTC" class="cam-loader-logo" />
+    <p class="cam-loader-text">Loading</p>
+    <div class="cam-loader-track"><div class="cam-loader-fill" id="camLoaderFill"></div></div>
+  </div>
+
+  <!-- ── HERO — Scroll-Driven Camera Animation ── -->
   <section class="hero" id="hero">
-    <!-- Video background -->
-    <video class="hero-video" autoplay muted loop playsinline>
-      <source src="video/BTC Website No Logo.mp4" type="video/mp4" />
-    </video>
-    <!-- Dark vignette overlay -->
-    <div class="hero-overlay"></div>
-    <!-- Film grain -->
-    <div class="hero-grain"></div>
+    <div class="hero-sticky">
 
-    <!-- Main content block -->
-    <div class="hero-content">
-      <p class="hero-label">Growth Consultancy &middot; Augusta, GA</p>
-      <h1 class="hero-headline" data-reveal>
-        Your phone<br />
-        <em>rings more.</em>
-      </h1>
-      <div class="hero-actions" data-reveal>
-        <a href="questionnaire.html" class="btn-outline btn-lg">
-          <span>Find Out What You're Losing</span>
-        </a>
-        <a href="#results" class="hero-secondary-cta">See the results →</a>
-      </div>
-    </div>
+      <!-- Scroll-driven frame canvas -->
+      <canvas id="camCanvas"></canvas>
 
-    <!-- Bottom MURSEE-style info bar -->
-    <div class="hero-bottom">
-      <!-- Left: Current case study -->
-      <div class="hero-project">
-        <div class="hp-niche" id="heroNiche">Pool &amp; Spa Service</div>
-        <div class="hp-result is-visible" id="heroResult">12 Customers to 31 — in 90 Days</div>
-      </div>
+      <!-- Dark vignette overlay -->
+      <div class="hero-overlay"></div>
+      <!-- Film grain -->
+      <div class="hero-grain"></div>
 
-      <!-- Center: Key stats -->
-      <div class="hero-stats">
-        <div class="hstat">
-          <div class="hstat-num" data-count="43">0</div>
-          <div class="hstat-label">customers<br />last month</div>
-        </div>
-        <div class="hstat-div"></div>
-        <div class="hstat">
-          <div class="hstat-num" data-count="14">0</div>
-          <div class="hstat-label">days to<br />first lead</div>
-        </div>
-        <div class="hstat-div"></div>
-        <div class="hstat">
-          <div class="hstat-num">4.9<em>★</em></div>
-          <div class="hstat-label">client<br />rating</div>
+      <!-- Main content block -->
+      <div class="hero-content" id="heroContent">
+        <p class="hero-label">Growth Consultancy &middot; Augusta, GA</p>
+        <h1 class="hero-headline" data-reveal>
+          Your phone<br />
+          <em>rings more.</em>
+        </h1>
+        <div class="hero-actions" data-reveal>
+          <a href="questionnaire.html" class="btn-outline btn-lg">
+            <span>Find Out What You're Losing</span>
+          </a>
+          <a href="#results" class="hero-secondary-cta">See the results →</a>
         </div>
       </div>
 
-      <!-- Right: Counter + dot nav + scroll -->
-      <div class="hero-nav">
-        <div class="hero-counter">
-          <span id="heroCurrent">01</span>
-          <span class="hc-sep"> / </span>
-          <span>05</span>
+      <!-- Bottom MURSEE-style info bar -->
+      <div class="hero-bottom">
+        <!-- Left: Current case study -->
+        <div class="hero-project">
+          <div class="hp-niche" id="heroNiche">Pool &amp; Spa Service</div>
+          <div class="hp-result is-visible" id="heroResult">12 Customers to 31 — in 90 Days</div>
         </div>
-        <div class="hero-dots">
-          <button class="hdot is-active" data-slide="0" aria-label="Slide 1"></button>
-          <button class="hdot" data-slide="1" aria-label="Slide 2"></button>
-          <button class="hdot" data-slide="2" aria-label="Slide 3"></button>
-          <button class="hdot" data-slide="3" aria-label="Slide 4"></button>
-          <button class="hdot" data-slide="4" aria-label="Slide 5"></button>
+
+        <!-- Center: Key stats -->
+        <div class="hero-stats">
+          <div class="hstat">
+            <div class="hstat-num" data-count="43">0</div>
+            <div class="hstat-label">customers<br />last month</div>
+          </div>
+          <div class="hstat-div"></div>
+          <div class="hstat">
+            <div class="hstat-num" data-count="14">0</div>
+            <div class="hstat-label">days to<br />first lead</div>
+          </div>
+          <div class="hstat-div"></div>
+          <div class="hstat">
+            <div class="hstat-num">4.9<em>★</em></div>
+            <div class="hstat-label">client<br />rating</div>
+          </div>
         </div>
-        <div class="hero-scroll">
-          <div class="scroll-line"></div>
-          <span>Scroll</span>
+
+        <!-- Right: scroll hint -->
+        <div class="hero-nav">
+          <div class="hero-scroll">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- MURSEE progress bar at very bottom -->
-    <div class="hero-bar">
-      <div class="hero-bar-fill" id="heroBarFill"></div>
-    </div>
+      <!-- MURSEE progress bar at very bottom -->
+      <div class="hero-bar">
+        <div class="hero-bar-fill" id="heroBarFill"></div>
+      </div>
+
+    </div><!-- /.hero-sticky -->
   </section>
 
   <!-- ── TICKER ── -->
@@ -168,19 +166,19 @@
         </div>
         <div class="pain-stack" data-reveal>
           <div class="pain-card">
-            <div class="pain-quote">"I get 80% of my customers from referrals. I know I need more but I don't know how
-              to get them online."</div>
-            <div class="pain-src">— Pool service owner</div>
+            <div class="pain-stat">97%</div>
+            <p class="pain-claim">of consumers research a local business online before calling — even when a friend referred them. If they can't find you, someone else answers.</p>
+            <div class="pain-src">BrightLocal Local SEO Report, 2025</div>
           </div>
           <div class="pain-card pain-card-accent">
-            <div class="pain-quote">"HomeAdvisor just sells my leads to 5 other guys. I'm paying for customers I can't
-              close."</div>
-            <div class="pain-src">— Local contractor</div>
+            <div class="pain-stat">$7.2M</div>
+            <p class="pain-claim">The FTC fine against HomeAdvisor for selling the same lead to up to 8 competing contractors simultaneously — and charging every single one of them.</p>
+            <div class="pain-src">Federal Trade Commission, Apr. 2023</div>
           </div>
           <div class="pain-card">
-            <div class="pain-quote">"When clients see us on video actually doing the work, they call. The problem is
-              getting in front of them."</div>
-            <div class="pain-src">— HVAC business owner</div>
+            <div class="pain-stat">87%</div>
+            <p class="pain-claim">of consumers say they were convinced to hire or buy after watching a brand video. Most local service businesses still have zero professional video.</p>
+            <div class="pain-src">Wyzowl State of Video Marketing, 2025</div>
           </div>
         </div>
       </div>
@@ -297,57 +295,166 @@
     </div>
   </section>
 
-  <!-- ── RESULTS / CASE STUDIES (MURSEE film-card grid) ── -->
+  <!-- ── RESULTS / TESTIMONIAL CAROUSEL ── -->
   <section class="section" id="results">
     <div class="container">
       <div class="section-header" data-reveal>
-        <p class="eyebrow">Case Studies</p>
-        <h2 class="section-headline">Real businesses.<br />Real numbers.</h2>
+        <p class="eyebrow">Real Clients. Real Results.</p>
+        <h2 class="section-headline">Don't take<br />our word for it.</h2>
       </div>
-      <div class="work-grid">
-        <div class="work-card" data-reveal>
-          <div class="work-card-bg wc-1"></div>
-          <div class="work-card-content">
-            <div class="wc-niche">YouTube Show & Web Design</div>
-            <div class="wc-metric">
-              <span class="wc-before" data-count="12">12</span>
-              <span class="wc-arrow">→</span>
-              <span class="wc-after" data-count="31">31</span>
-            </div>
-            <div class="wc-label">new customers / month</div>
-            <p class="wc-quote">"Every single video they've produced has been high-quality, creative, and professional. They really understand how to capture the vision and bring it to life on camera."</p>
-            <div class="wc-meta">Thomas Robinson</div>
+    </div>
+
+    <!-- Full-width carousel — no container -->
+    <div class="tcar-outer" id="tCarOuter">
+      <div class="tcar-track" id="tCarTrack">
+
+        <!-- Card 1 — Thomas Robinson -->
+        <div class="tcar-card">
+          <img class="tcar-card-img" src="images/card-thomas-robinson.png" alt="YouTube Show & Web Design">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"Working with BTC has been one of the best decisions for my brand. They produce our YouTube show — every video is high-quality, creative, and professional. They also completely transformed my website: clean, stunning, exactly how I wanted it. Fast turnaround, genuine care, zero stress. BTC is who you want."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Thomas Robinson</span>
+            <span class="tcar-service">YouTube Show &amp; Web Design</span>
           </div>
         </div>
-        <div class="work-card work-card-tall" data-reveal>
-          <div class="work-card-bg wc-2"></div>
-          <div class="work-card-content">
-            <div class="wc-niche">Brand Video & Web Design</div>
-            <div class="wc-metric">
-              <span class="wc-before" data-count="18" data-prefix="$">$18</span>
-              <span class="wc-arrow">→</span>
-              <span class="wc-after wc-red" data-count="6" data-prefix="$">$6</span>
-            </div>
-            <div class="wc-label">cost per customer acquired</div>
-            <p class="wc-quote">"Everything was super smooth, top quality, and professional! If you're undecided on choosing a company to help you with your brand presence through video, web design, and more — I recommend BTC!"</p>
-            <div class="wc-meta">Shawn Abrams</div>
+
+        <!-- Card 2 — Marty P -->
+        <div class="tcar-card tcar-card-accent">
+          <img class="tcar-card-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=720&q=80&fit=crop" alt="Wedding Videography">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"We couldn't have asked for a better wedding videographer. Brandon captured so many beautiful moments — the heartfelt interview videos and breathtaking drone footage made our day truly unforgettable. Professional, creative, and genuinely invested in every detail. We highly recommend him."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Marty P</span>
+            <span class="tcar-service">Wedding Videography</span>
           </div>
         </div>
-        <div class="work-card" data-reveal>
-          <div class="work-card-bg wc-3"></div>
-          <div class="work-card-content">
-            <div class="wc-niche">Smashed Mouth Lemonade</div>
-            <div class="wc-metric">
-              <span class="wc-before">0</span>
-              <span class="wc-arrow">→</span>
-              <span class="wc-after" data-count="22">22</span>
-            </div>
-            <div class="wc-label">online leads in first month</div>
-            <p class="wc-quote">"The final product captured my brand beautifully and exceeded my expectations. They're truly a partner you can trust to elevate your business."</p>
-            <div class="wc-meta">Ashley Brown · Smashed Mouth Lemonade</div>
+
+        <!-- Card 3 — Shawn Abrams -->
+        <div class="tcar-card">
+          <img class="tcar-card-img" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=720&q=80&fit=crop" alt="Brand Video & Web Design">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"The team at BTC is phenomenal. Everything was smooth, top quality, and professional from start to finish. Whether it's video, web design, or building your brand presence — they deliver. Stop looking. I recommend BTC without hesitation."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Shawn Abrams</span>
+            <span class="tcar-service">Brand Video &amp; Web Design</span>
           </div>
         </div>
-      </div>
+
+        <!-- Card 4 — Ashley Brown -->
+        <div class="tcar-card tcar-card-accent">
+          <img class="tcar-card-img" src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=720&q=80&fit=crop" alt="Smashed Mouth Lemonade Promo Video">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"BTC created an outstanding promotional video for Smashed Mouth Lemonade. What stood out most was their communication at every step. The final product captured my brand beautifully and exceeded my expectations. They're a partner you can truly trust."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Ashley Brown</span>
+            <span class="tcar-service">Smashed Mouth Lemonade</span>
+          </div>
+        </div>
+
+        <!-- Card 5 — Cornell Mack -->
+        <div class="tcar-card">
+          <img class="tcar-card-img" src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=720&q=80&fit=crop" alt="Wedding Photography & Drone">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"Our wedding day couldn't have been captured more perfectly. Brandon and Martin were professional, easy to work with, and made us feel completely at ease in front of the camera. The photos are incredible, and the drone footage was a game-changer. We couldn't be happier."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Cornell Mack</span>
+            <span class="tcar-service">Wedding Photography &amp; Drone</span>
+          </div>
+        </div>
+
+        <!-- Card 6 — Melissa -->
+        <div class="tcar-card tcar-card-accent">
+          <img class="tcar-card-img" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=720&q=80&fit=crop" alt="Event Photography">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"Brandon and his team were amazing. They captured every detail and produced beautiful photographs for our NeXus Community Event and Studio on 8th. Professional, thorough, and truly skilled — if you need photography that tells the story of your event, call BTC."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Melissa</span>
+            <span class="tcar-service">Event Photography</span>
+          </div>
+        </div>
+
+        <!-- Card 7 — Dallas Frazier -->
+        <div class="tcar-card">
+          <img class="tcar-card-img" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=720&q=80&fit=crop" alt="Event Venue Promo Video">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"BTC created a promotional video for my event venue that perfectly captured the essence of my business. Easy to work with, genuinely committed to my vision, and produced something that continues to bring real attention to the venue. I highly recommend them."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Dallas (Tony D) Frazier</span>
+            <span class="tcar-service">Event Venue Promo Video</span>
+          </div>
+        </div>
+
+        <!-- Card 8 — Queen Gregory -->
+        <div class="tcar-card tcar-card-accent">
+          <img class="tcar-card-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=720&q=80&fit=crop" alt="Matcha Brand Video">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"BTC created a timeless video for my Matcha business that captured my story beautifully and authentically. Brandon kept us on schedule, communicated every step, and was open to feedback. They brought my vision to life exactly as I imagined. Hire BTC — you won't be disappointed."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Queen Gregory</span>
+            <span class="tcar-service">Matcha Brand Video</span>
+          </div>
+        </div>
+
+        <!-- Card 9 — Roneisha Mack -->
+        <div class="tcar-card">
+          <img class="tcar-card-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=720&q=80&fit=crop" alt="Wedding Photography & Drone">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"We are beyond grateful for our wedding photography experience. From start to finish, BTC was professional, creative, and captured every special moment with stunning detail. The drone footage made everything look like a movie. They went above and beyond. Highly recommend."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Roneisha Mack</span>
+            <span class="tcar-service">Wedding Photography &amp; Drone</span>
+          </div>
+        </div>
+
+        <!-- Card 10 — Danielle Jennings -->
+        <div class="tcar-card tcar-card-accent">
+          <img class="tcar-card-img" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=720&q=80&fit=crop" alt="Business Services">
+          <div class="tcar-top">
+            <span class="tcar-stars">★★★★★</span>
+            <span class="tcar-badge">Google Review</span>
+          </div>
+          <p class="tcar-quote">"I've worked with BTC on multiple projects and enjoy their services every time. Everyone is friendly, on time, and the process is always hands-on and personal. They've genuinely helped grow my business, and I refer them without hesitation to anyone — personal or professional."</p>
+          <div class="tcar-footer">
+            <span class="tcar-name">Danielle Jennings</span>
+            <span class="tcar-service">Business Services</span>
+          </div>
+        </div>
+
+      </div><!-- /.tcar-track -->
+
+      <button class="tcar-arrow tcar-prev" id="tCarPrev" aria-label="Previous">&#8592;</button>
+      <button class="tcar-arrow tcar-next" id="tCarNext" aria-label="Next">&#8594;</button>
+    </div><!-- /.tcar-outer -->
+
+    <div class="tcar-dots" id="tCarDots"></div>
     </div>
   </section>
 
